@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ============================================================
+       配置区：只需改这里
+       - TARGET_URL    ：要跳转到的 GitHub 链接（固定写死）
+       - REDIRECT_DELAY：倒计时秒数，到时自动跳转
+       - SITE_NAME     ：落地页标题
+       - SITE_SUB      ：副标题说明
+       ============================================================ -->
+  <script>
+    var TARGET_URL     = "https://github.com/你的用户名/你的仓库"; // ← 改成你的 GitHub 仓库/下载地址
+    var REDIRECT_DELAY = 3;                                        // ← 自动跳转倒计时（秒）
+    var SITE_NAME      = "PlayNest";
+    var SITE_SUB       = "即将跳转到 GitHub 下载页面";
+  </script>
+
+  <!-- meta refresh 由下方 JS 根据 TARGET_URL 动态写入，保证单一来源、不会和上面写错 -->
+  <meta id="meta-refresh" http-equiv="refresh" content="0">
+
+  <title>正在跳转到 GitHub…</title>
+
+  <style>
+    :root{
+      --indigo:#4f46e5;   /* 站点主色 靛蓝 */
+      --teal:#14b8a6;     /* 站点辅色 青绿 */
+      --sky:#0ea5e9;
+      --ink:#1f2937;
+      --muted:#6b7280;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+      background:linear-gradient(135deg,#eef2ff 0%,#ecfeff 100%);
+      color:var(--ink);
+      display:flex;align-items:center;justify-content:center;
+      min-height:100vh;padding:24px;
+    }
+    .card{
+      width:100%;max-width:420px;
+      background:#fff;border-radius:20px;
+      box-shadow:0 20px 50px rgba(79,70,229,.15);
+      padding:40px 32px;text-align:center;
+      border-top:6px solid transparent;
+      border-image:linear-gradient(90deg,var(--indigo),var(--teal)) 1;
+    }
+    .logo{
+      width:64px;height:64px;margin:0 auto 18px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--indigo),var(--teal));
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 20px rgba(20,184,166,.35);
+    }
+    .logo svg{width:34px;height:34px;fill:#fff;}
+    h1{font-size:20px;font-weight:800;margin-bottom:6px;}
+    .sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+    .count{
+      font-size:48px;font-weight:800;line-height:1;
+      background:linear-gradient(135deg,var(--indigo),var(--sky));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      margin-bottom:6px;
+    }
+    .count-tip{font-size:13px;color:var(--muted);margin-bottom:26px;}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      text-decoration:none;font-weight:700;font-size:15px;color:#fff;
+      background:linear-gradient(135deg,var(--indigo),var(--teal));
+      padding:13px 26px;border-radius:12px;
+      box-shadow:0 8px 20px rgba(79,70,229,.3);
+      transition:transform .15s,filter .15s;
+    }
+    .btn:hover{transform:translateY(-2px);filter:brightness(1.05);}
+    .btn svg{width:18px;height:18px;fill:#fff;}
+    .foot{margin-top:22px;font-size:12px;color:#9ca3af;}
+    .foot a{color:var(--indigo);text-decoration:none;}
+    /* 无 JS 兜底 */
+    .noscript-note{margin-top:18px;font-size:13px;color:var(--muted);}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo" aria-hidden="true">
+      <!-- GitHub 图标 -->
+      <svg viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+    </div>
+    <h1 id="title">正在跳转到 GitHub…</h1>
+    <p class="sub" id="sub">即将跳转到 GitHub 下载页面</p>
+
+    <div class="count" id="count">3</div>
+    <div class="count-tip">秒后自动跳转</div>
+
+    <a class="btn" id="goBtn" href="#">
+      <svg viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+      立即前往 GitHub ↗
+    </a>
+
+    <p class="foot">若未自动跳转，请点击上方按钮。<br>本页由 <span id="sitename">PlayNest</span> 提供中转。</p>
+    <noscript>
+      <p class="noscript-note">你的浏览器禁用了 JavaScript，请<a href="#" id="nsLink">点击这里手动前往 GitHub</a>。</p>
+    </noscript>
+  </div>
+
+  <script>
+    (function () {
+      // 单一数据源：用 TARGET_URL 动态写 meta refresh，避免和上面写错两处
+      var meta = document.getElementById('meta-refresh');
+      if (meta) meta.content = REDIRECT_DELAY + ";url=" + TARGET_URL;
+
+      document.getElementById('title').textContent = "正在跳转到 GitHub…";
+      document.getElementById('sub').textContent   = SITE_SUB || "即将跳转到 GitHub 下载页面";
+      document.getElementById('sitename').textContent = SITE_NAME || "PlayNest";
+
+      var btn  = document.getElementById('goBtn');
+      var ns   = document.getElementById('nsLink');
+      btn.href = TARGET_URL;
+      if (ns) ns.href = TARGET_URL;
+
+      var remain = REDIRECT_DELAY;
+      var el = document.getElementById('count');
+      el.textContent = remain;
+
+      var timer = setInterval(function () {
+        remain -= 1;
+        if (remain <= 0) {
+          clearInterval(timer);
+          window.location.replace(TARGET_URL);
+          return;
+        }
+        el.textContent = remain;
+      }, 1000);
+    })();
+  </script>
+</body>
+</html>
