@@ -3,311 +3,405 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- ===== 页面标题 / SEO：改成你的游戏或软件 ===== -->
-    <title>游戏/软件名称下载-夸克网盘高速下载</title>
-    <meta name="description" content="游戏/软件名称 资源下载 | 通过夸克网盘高速下载，含完整安装包与合集，提取码见页面底部。">
-    <meta name="keywords" content="游戏下载,软件下载,夸克网盘,资源合集">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- ===== 页面标题 / SEO：改成你的合集名称 ===== -->
+    <title>2025 资源合集｜夸克网盘一键下载｜免费无广告</title>
+    <meta name="description" content="精品软件/游戏/电子书合集，支持夸克网盘高速转存下载，按栏目分类、一键极速下载。">
+    <meta name="keywords" content="软件合集,游戏合集,夸克网盘,资源下载,极速下载">
     <style>
         :root {
             /* ===== 站点统一配色：靛蓝 + 青绿 ===== */
             --primary: #4f46e5;     /* 靛蓝 主色 */
             --accent:  #14b8a6;     /* 青绿 辅色 */
-            --secondary: #eef2ff;   /* 浅靛蓝 背景块 */
-            --text: #1f2937;
-            --muted: #6b7280;
-            --gap: 24px;
-            --radius: 10px;
+            --star:    #f59e0b;     /* 星级 琥珀 */
+            --text:    #1f2937;
+            --muted:   #6b7280;
+            --line:    #eef2ff;     /* 浅靛蓝描边 */
+            --bg:      #f7f8fc;
+            --radius:  14px;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
             line-height: 1.6;
             color: var(--text);
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 20px;
+            background: var(--bg);
+            padding: 24px 16px 40px;
         }
 
-        .nav-bar {
+        .wrap { max-width: 1280px; margin: 0 auto; }
+
+        /* ===== 页头 ===== */
+        .page-header { text-align: center; margin-bottom: 18px; }
+        .page-header h1 {
+            font-size: clamp(22px, 3vw, 30px); font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            padding: 16px 32px;
-            border-radius: var(--radius);
-            margin-bottom: var(--gap);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 6px 18px rgba(79,70,229,.25);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .page-header p { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+        /* ===== 资源获取提示横幅 ===== */
+        .notice {
+            background: linear-gradient(135deg, #eef2ff, #ecfeff);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px; padding: 14px 20px; margin-bottom: 18px;
+        }
+        .notice h2 { font-size: 15px; color: var(--primary); margin-bottom: 6px; }
+        .notice ul { margin: 0; padding-left: 18px; }
+        .notice li { font-size: 13px; color: #475569; margin: 3px 0; }
+
+        /* ===== 栏目导航（锚点跳转） ===== */
+        .cat-nav {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            justify-content: center; margin-bottom: 26px;
+        }
+        .cat-nav a {
+            text-decoration: none; font-size: 14px; font-weight: 600;
+            color: var(--primary);
+            background: #fff; border: 1px solid var(--line);
+            padding: 8px 18px; border-radius: 20px;
+            transition: all .15s;
+        }
+        .cat-nav a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; border-color: transparent;
+        }
+        .cat-nav a.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; border-color: transparent;
+            box-shadow: 0 4px 12px rgba(79,70,229,.25);
         }
 
-        .nav-title { font-size: 1.5rem; font-weight: 700; }
-        .nav-version { font-size: 0.875rem; opacity: 0.92; }
-
-        .hero-section {
-            display: grid;
-            grid-template-columns: minmax(300px, 1fr) minmax(350px, 40%);
-            gap: var(--gap);
-            align-items: center;
-            margin-bottom: var(--gap);
+        /* ===== 分类栏目 ===== */
+        .cat-title {
+            font-size: 19px; font-weight: 800; color: var(--primary);
+            margin: 30px 0 16px; padding-left: 12px;
+            border-left: 4px solid var(--accent);
         }
 
-        .screenshot-container {
-            position: relative;
-            padding-bottom: 60%;
-            border-radius: var(--radius);
+        /* ===== 多栏卡片网格 ===== */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        @media (max-width: 980px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px)  { .grid { grid-template-columns: 1fr; } }
+
+        .card {
+            position: relative; background: #fff;
+            border: 1px solid var(--line); border-radius: var(--radius);
+            padding: 18px 18px 16px; transition: transform .15s, box-shadow .15s;
             overflow: hidden;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-            background: var(--secondary);
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 26px rgba(79,70,229,.14);
+            border-color: rgba(79,70,229,.35);
         }
 
-        .screenshot {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            object-position: center;
-            border: 1px solid #e5e7eb;
-        }
-
-        .description {
-            background: var(--secondary);
-            padding: clamp(16px, 3vw, 24px);
-            border-radius: var(--radius);
-            min-width: 300px;
-        }
-
-        .description h1 {
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
-            margin-bottom: 1em;
-            color: var(--primary);
-        }
-
-        .description p {
-            font-size: clamp(14px, 1.6vw, 16px);
-            line-height: 1.8;
-            color: var(--text);
-        }
-
-        /* ===== 夸克下载按钮：主行动点 ===== */
-        .btn-primary {
+        .badge {
+            position: absolute; top: 12px; right: 12px;
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            padding: 13px 42px;
-            border: none;
-            border-radius: 24px;
-            margin-top: 18px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            box-shadow: 0 8px 20px rgba(79,70,229,.3);
-            transition: transform .15s, filter .15s;
-        }
-        .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.05); }
-        .btn-primary i { font-size: 1.1em; }
-
-        /* 提取码小提示（可选，没有就删掉这段） */
-        .code-hint {
-            margin-top: 12px;
-            font-size: 14px;
-            color: var(--muted);
-        }
-        .code-hint b { color: var(--accent); letter-spacing: 2px; }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin: var(--gap) 0;
+            color: #fff; font-size: 12px; font-weight: 700;
+            padding: 2px 9px; border-radius: 10px;
         }
 
-        .category-item {
-            background: linear-gradient(145deg, #ffffff 0%, #f5f7ff 100%);
-            border: 1px solid rgba(79,70,229,0.15);
-            padding: 18px 20px;
-            border-radius: var(--radius);
-            display: flex;
-            justify-content: space-between;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .name { font-size: 17px; font-weight: 700; color: var(--text); padding-right: 52px; margin-bottom: 8px; }
+
+        .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .score { display: flex; align-items: baseline; gap: 2px; }
+        .score .num { font-size: 28px; font-weight: 800; color: var(--primary); line-height: 1; }
+        .score .unit { font-size: 12px; color: var(--muted); }
+        .stars { color: var(--star); font-size: 14px; letter-spacing: 1px; }
+        .stars .rate { color: var(--muted); font-size: 12px; margin-left: 4px; }
+
+        .desc { font-size: 13px; color: var(--muted); margin-bottom: 10px; min-height: 38px; }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+        .tags span {
+            font-size: 12px; color: #475569;
+            background: #f1f5f9; border: 1px solid #e2e8f0;
+            padding: 2px 9px; border-radius: 7px;
         }
 
-        .category-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(79,70,229,0.12);
-            border-color: rgba(79,70,229,0.3);
+        .dl {
+            display: block; text-align: center; text-decoration: none;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; font-weight: 700; font-size: 14px;
+            padding: 10px; border-radius: 10px;
+            box-shadow: 0 6px 16px rgba(79,70,229,.25);
+            transition: filter .15s, transform .15s;
         }
+        .dl:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin: var(--gap) 0;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 24px;
-            background: linear-gradient(145deg, #f8f8f8 0%, #f0fdfa 100%);
-            border-radius: var(--radius);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .feature-icon {
-            font-size: 1.4em;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .feature-item:hover .feature-icon {
-            transform: rotate(10deg) scale(1.1);
-            filter: drop-shadow(0 2px 4px rgba(79,70,229,0.3));
-            color: var(--accent);
-        }
-
-        .section-title {
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin: 32px 0 20px;
-            padding-left: 3px;
-            border-left: 3px solid var(--accent);
-        }
-
-        .faq-section { background: #f5f5f5; padding: 32px; border-radius: var(--radius); }
-        .faq-item { margin-bottom: 20px; padding: 16px; background: white; border-radius: calc(var(--radius) - 2px); }
-        .faq-item h3 { color: var(--primary); margin-bottom: 6px; }
-
+        /* ===== 页脚 ===== */
         footer {
-            background: var(--secondary);
-            padding: 24px 20px;
-            margin-top: var(--gap);
-            text-align: center;
-            border-radius: var(--radius);
+            margin-top: 36px; text-align: center;
+            background: #fff; border: 1px solid var(--line);
+            border-radius: var(--radius); padding: 24px 20px;
         }
-        footer .quark-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+        footer .quark-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
         footer .quark-links a {
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: #fff; text-decoration: none; font-weight: 700;
             padding: 10px 22px; border-radius: 20px; font-size: 14px;
-            box-shadow: 0 4px 12px rgba(79,70,229,.25);
         }
         footer .quark-links a:hover { filter: brightness(1.05); }
         footer small { color: var(--muted); }
-
-        @media (max-width: 1024px) {
-            .hero-section { grid-template-columns: 1fr; }
-            .category-grid { grid-template-columns: repeat(3, 1fr); }
-            .feature-grid { grid-template-columns: repeat(2, 1fr); }
-            .screenshot-container { order: -1; }
-        }
-
-        @media (max-width: 768px) {
-            :root { --gap: 16px; }
-            .category-grid { grid-template-columns: repeat(2, 1fr); }
-            .feature-grid { grid-template-columns: 1fr; }
-            .nav-bar { padding: 12px 20px; }
-        }
-
-        @media (max-width: 480px) {
-            .category-grid { grid-template-columns: 1fr; }
-            .screenshot-container { padding-bottom: 70%; }
-        }
     </style>
 </head>
 <body>
-    <!-- ===== 顶部导航：改成你的名称 / 版本 ===== -->
-    <nav class="nav-bar">
-        <div class="nav-title">游戏/软件名称</div>
-        <div class="nav-version">v1.0.0</div>
-    </nav>
+    <div class="wrap">
+        <!-- ===== 页头 ===== -->
+        <header class="page-header">
+            <h1>2025 精品资源合集</h1>
+            <p>软件 · 游戏 · 电子书 一键下载｜免费无广告｜支持夸克网盘极速转存</p>
+        </header>
 
-    <!-- ===== 主视觉：截图 + 简介 + 夸克下载按钮 ===== -->
-    <section class="hero-section">
-        <div class="screenshot-container">
-            <!-- 把你的截图放到同目录，改成实际文件名 -->
-            <img src="screenshot.jpg" class="screenshot" alt="游戏/软件界面演示">
+        <!-- ===== 资源获取提示 ===== -->
+        <div class="notice">
+            <h2>资源获取提示</h2>
+            <ul>
+                <li>推荐使用手机端夸克批量转存，首次转存可获得 1TB 容量。</li>
+                <li>点「极速下载」后保存到自己的夸克网盘，再从客户端下载更稳定。</li>
+                <li>链接失效请在评论区反馈，我们会定期补链更新。</li>
+            </ul>
         </div>
-        <div class="description">
-            <h1>一句话亮点标题</h1>
-            <p>这里写一段简介：资源内容、版本说明、为什么值得下载等。例如：完整版含全部 DLC、已整合运行库、解压即玩，通过夸克网盘高速下载。</p>
 
-            <!-- ★ 主要夸克下载链接：把 href 换成你的 pan.quark.cn 分享地址 ★ -->
-            <a class="btn-primary" href="https://pan.quark.cn/s/你的夸克分享链接" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-cloud-download-alt"></i> 夸克网盘立即下载
-            </a>
+        <!-- ===== 栏目导航（点选跳转到对应分类） ===== -->
+        <nav class="cat-nav">
+            <a href="#cat-all" data-cat="all" class="active">全部</a>
+            <a href="#cat-soft" data-cat="soft">实用软件</a>
+            <a href="#cat-game" data-cat="game">游戏</a>
+            <a href="#cat-book" data-cat="book">小说电子书</a>
+            <a href="#cat-anime" data-cat="anime">影音动漫</a>
+            <a href="#cat-audio" data-cat="audio">听书</a>
+            <a href="#cat-android" data-cat="android">安卓 APP</a>
+        </nav>
 
-            <!-- 提取码（可选）：没有就删掉这一行 -->
-            <div class="code-hint">提取码：<b>ABCD</b></div>
-        </div>
-    </section>
+        <!-- ↓↓↓ 每个分类一个 .cat 区块：<h2 class="cat-title"> 标题 + <section class="grid"> 卡片组。
+             新增分类：复制一个 .cat 块；新增条目：复制组内任意 .card 块，改 href 为你的 pan.quark.cn 链接。 ↓↓↓ -->
 
-    <!-- ===== 版本 / 亮点特性 ===== -->
-    <h2 class="section-title">版本特性</h2>
-    <section class="feature-grid">
-        <div class="feature-item"><i class="feature-icon fas fa-bolt"></i><span>高速夸克直链下载</span></div>
-        <div class="feature-item"><i class="feature-icon fas fa-layer-group"></i><span>整合全部 DLC / 资源</span></div>
-        <div class="feature-item"><i class="feature-icon fas fa-shield-alt"></i><span>已校验 · 安全无毒</span></div>
-    </section>
+        <!-- ============ 实用软件 ============ -->
+        <section class="cat" id="cat-soft">
+            <h2 class="cat-title">实用软件</h2>
+            <section class="grid">
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">李跳跳</div>
+                    <div class="score-row"><div class="score"><span class="num">9.8</span><span class="unit">分</span></div><div class="stars">★★★★★<span class="rate">4.9</span></div></div>
+                    <div class="desc">开屏广告屏蔽工具，清爽无干扰。</div>
+                    <div class="tags"><span>安卓</span><span>iOS</span><span>Windows</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接1" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
 
-    <!-- ===== 核心内容网格（按需改文案） ===== -->
-    <h2 class="section-title">核心内容</h2>
-    <section class="category-grid">
-        <div class="category-item"><span>主程序</span><span>1 个</span></div>
-        <div class="category-item"><span>补丁 / MOD</span><span>若干</span></div>
-        <div class="category-item"><span>汉化包</span><span>完整</span></div>
-        <div class="category-item"><span>运行库</span><span>内置</span></div>
-        <div class="category-item"><span>攻略</span><span>附赠</span></div>
-        <div class="category-item"><span>原声音乐</span><span>可选</span></div>
-        <div class="category-item"><span>修改器</span><span>可选</span></div>
-        <div class="category-item"><span>更新日志</span><span>见合集</span></div>
-    </section>
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">VIP 软件合集</div>
+                    <div class="score-row"><div class="score"><span class="num">9.9</span><span class="unit">分</span></div><div class="stars">★★★★★<span class="rate">4.8</span></div></div>
+                    <div class="desc">解锁各大平台 VIP 特权工具。</div>
+                    <div class="tags"><span>Windows</span><span>MacOS</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接2" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
 
-    <!-- ===== 技术亮点 ===== -->
-    <h2 class="section-title">下载说明</h2>
-    <section class="feature-grid">
-        <div class="feature-item"><i class="feature-icon fas fa-download"></i><span>夸克网盘不限速下载</span></div>
-        <div class="feature-item"><i class="feature-icon fas fa-folder-open"></i><span>解压即玩 / 一键安装</span></div>
-        <div class="feature-item"><i class="feature-icon fas fa-sync-alt"></i><span>长期维护更新</span></div>
-        <div class="feature-item"><i class="feature-icon fas fa-key"></i><span>提取码见上方按钮</span></div>
-        <div class="feature-item"><i class="feature-icon fas fa-comments"></i><span>问题评论区留言</span></div>
-        <div class="feature-item"><i class="feature-icon fas fa-heart"></i><span>收藏本站不迷路</span></div>
-    </section>
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">图吧工具箱</div>
+                    <div class="score-row"><div class="score"><span class="num">9.8</span><span class="unit">分</span></div><div class="stars">★★★★★<span class="rate">4.8</span></div></div>
+                    <div class="desc">全能硬件检测与实用工具箱。</div>
+                    <div class="tags"><span>安卓</span><span>iOS</span><span>Windows</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接3" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
 
-    <!-- ===== 常见问题 ===== -->
-    <h2 class="section-title">常见问题</h2>
-    <section class="faq-section">
-        <div class="faq-item">
-            <h3>需要会员才能下载吗？</h3>
-            <p>夸克网盘普通用户即可下载，登录后保存到自己网盘再下载更稳定。</p>
-        </div>
-        <div class="faq-item">
-            <h3>链接失效怎么办？</h3>
-            <p>资源会定期补链，若提示失效请在评论区反馈，我们会尽快更新。</p>
-        </div>
-        <div class="faq-item">
-            <h3>解压密码是多少？</h3>
-            <p>如无特殊说明则无密码；若有，密码会标注在下载页或压缩包注释中。</p>
-        </div>
-    </section>
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">迅雷破解版</div>
+                    <div class="score-row"><div class="score"><span class="num">9.7</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.7</span></div></div>
+                    <div class="desc">永久 VIP，全网资源极速下载。</div>
+                    <div class="tags"><span>Windows</span><span>MacOS</span><span>安卓</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接4" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
 
-    <!-- ===== 底部：夸克网盘合集链接 ===== -->
-    <footer>
-        <div class="quark-links">
-            <!-- ★ 底部夸克合集：换成你的 pan.quark.cn 合集地址 ★ -->
-            <a href="https://pan.quark.cn/s/你的夸克合集链接1" target="_blank" rel="noopener noreferrer">软件合集</a>
-            <a href="https://pan.quark.cn/s/你的夸克合集链接2" target="_blank" rel="noopener noreferrer">游戏合集</a>
-        </div>
-        <small>本站资源均来自网络收集，仅供学习交流使用，请在 24 小时内删除。</small>
-    </footer>
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">去水印工具</div>
+                    <div class="score-row"><div class="score"><span class="num">9.5</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.6</span></div></div>
+                    <div class="desc">一键去除图片 / 视频水印。</div>
+                    <div class="tags"><span>Windows</span><span>MacOS</span><span>Web</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接5" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">Adobe 全家桶合集</div>
+                    <div class="score-row"><div class="score"><span class="num">9.7</span><span class="unit">分</span></div><div class="stars">★★★★★<span class="rate">4.8</span></div></div>
+                    <div class="desc">含 PS/PR/AE 等 260GB 设计软件及课程。</div>
+                    <div class="tags"><span>Windows</span><span>macOS</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接6" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">AI 课程合集</div>
+                    <div class="score-row"><div class="score"><span class="num">9.4</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.7</span></div></div>
+                    <div class="desc">14 门付费人工智能精品课程。</div>
+                    <div class="tags"><span>跨平台</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接7" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============ 游戏 ============ -->
+        <section class="cat" id="cat-game">
+            <h2 class="cat-title">游戏</h2>
+            <section class="grid">
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">樱花校园模拟器</div>
+                    <div class="score-row"><div class="score"><span class="num">9.6</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.7</span></div></div>
+                    <div class="desc">全功能校园模拟器，自由度高。</div>
+                    <div class="tags"><span>安卓</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接8" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">安卓实用 APP 合集</div>
+                    <div class="score-row"><div class="score"><span class="num">9.5</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.7</span></div></div>
+                    <div class="desc">精选绿色无广告工具应用集合。</div>
+                    <div class="tags"><span>安卓</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接9" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============ 小说电子书 ============ -->
+        <section class="cat" id="cat-book">
+            <h2 class="cat-title">小说电子书</h2>
+            <section class="grid">
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">小说软件 App 合集</div>
+                    <div class="score-row"><div class="score"><span class="num">9.6</span><span class="unit">分</span></div><div class="stars">★★★★★<span class="rate">4.7</span></div></div>
+                    <div class="desc">各类小说 APP 合集，定期更新。</div>
+                    <div class="tags"><span>安卓</span><span>iOS</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接10" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">金庸武侠合集</div>
+                    <div class="score-row"><div class="score"><span class="num">9.2</span><span class="unit">分</span></div><div class="stars">★★★★★<span class="rate">4.8</span></div></div>
+                    <div class="desc">经典武侠小说全集典藏版。</div>
+                    <div class="tags"><span>电子书</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接11" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">鬼吹灯全系列</div>
+                    <div class="score-row"><div class="score"><span class="num">9.6</span><span class="unit">分</span></div><div class="stars">★★★★★<span class="rate">4.9</span></div></div>
+                    <div class="desc">小说 + 电视剧 91.6GB 高清合集。</div>
+                    <div class="tags"><span>电子书</span><span>视频</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接12" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+
+                <div class="card">
+                    <div class="name">晋江顶流作品集</div>
+                    <div class="score-row"><div class="score"><span class="num">9.0</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.6</span></div></div>
+                    <div class="desc">32 位头部作家代表作合集。</div>
+                    <div class="tags"><span>电子书</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接13" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============ 影音动漫 ============ -->
+        <section class="cat" id="cat-anime">
+            <h2 class="cat-title">影音动漫</h2>
+            <section class="grid">
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">动漫软件合集</div>
+                    <div class="score-row"><div class="score"><span class="num">9.7</span><span class="unit">分</span></div><div class="stars">★★★★★<span class="rate">4.8</span></div></div>
+                    <div class="desc">热门动漫软件合集，支持各大平台。</div>
+                    <div class="tags"><span>安卓</span><span>iOS</span><span>Windows</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接14" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============ 听书 ============ -->
+        <section class="cat" id="cat-audio">
+            <h2 class="cat-title">听书</h2>
+            <section class="grid">
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">听书软件</div>
+                    <div class="score-row"><div class="score"><span class="num">9.4</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.5</span></div></div>
+                    <div class="desc">全网听书神器，支持多平台同步。</div>
+                    <div class="tags"><span>安卓</span><span>iOS</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接15" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============ 安卓 APP ============ -->
+        <section class="cat" id="cat-android">
+            <h2 class="cat-title">安卓 APP</h2>
+            <section class="grid">
+                <div class="card">
+                    <span class="badge">精品</span>
+                    <div class="name">微软运行库合集包</div>
+                    <div class="score-row"><div class="score"><span class="num">9.3</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.6</span></div></div>
+                    <div class="desc">VC++ 2005-2022 与 .NET Framework 集成包。</div>
+                    <div class="tags"><span>Windows</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接16" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+
+                <div class="card">
+                    <div class="name">绿软集合 1.0.24</div>
+                    <div class="score-row"><div class="score"><span class="num">9.1</span><span class="unit">分</span></div><div class="stars">★★★★<span class="rate">4.5</span></div></div>
+                    <div class="desc">绿色无捆绑的常用软件工具箱。</div>
+                    <div class="tags"><span>Windows</span></div>
+                    <a class="dl" href="https://pan.quark.cn/s/你的夸克链接17" target="_blank" rel="noopener noreferrer">极速下载</a>
+                </div>
+            </section>
+        </section>
+
+        <!-- ===== 底部：夸克网盘合集链接 ===== -->
+        <footer>
+            <div class="quark-links">
+                <!-- ★ 底部夸克合集：换成你的 pan.quark.cn 合集地址 ★ -->
+                <a href="https://pan.quark.cn/s/你的夸克合集链接1" target="_blank" rel="noopener noreferrer">软件合集</a>
+                <a href="https://pan.quark.cn/s/你的夸克合集链接2" target="_blank" rel="noopener noreferrer">游戏合集</a>
+            </div>
+            <small>本站资源均来自网络收集，仅供学习交流使用，请在 24 小时内删除。</small>
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            var links = document.querySelectorAll('.cat-nav a');
+            var cats  = document.querySelectorAll('.cat');
+
+            function showOnly(cat) {
+                cats.forEach(function (c) {
+                    // 当前栏目（或“全部”）显示，其余隐藏
+                    c.style.display = (cat === 'all' || c.id === 'cat-' + cat) ? '' : 'none';
+                });
+            }
+
+            links.forEach(function (a) {
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();                 // 不跳转、不滚动
+                    links.forEach(function (x) { x.classList.remove('active'); });
+                    a.classList.add('active');
+                    showOnly(a.getAttribute('data-cat'));
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            showOnly('all');                            // 默认显示全部
+        })();
+    </script>
 </body>
 </html>
