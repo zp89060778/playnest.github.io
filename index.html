@@ -1,142 +1,313 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ===== 页面标题 / SEO：改成你的游戏或软件 ===== -->
+    <title>游戏/软件名称下载-夸克网盘高速下载</title>
+    <meta name="description" content="游戏/软件名称 资源下载 | 通过夸克网盘高速下载，含完整安装包与合集，提取码见页面底部。">
+    <meta name="keywords" content="游戏下载,软件下载,夸克网盘,资源合集">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            /* ===== 站点统一配色：靛蓝 + 青绿 ===== */
+            --primary: #4f46e5;     /* 靛蓝 主色 */
+            --accent:  #14b8a6;     /* 青绿 辅色 */
+            --secondary: #eef2ff;   /* 浅靛蓝 背景块 */
+            --text: #1f2937;
+            --muted: #6b7280;
+            --gap: 24px;
+            --radius: 10px;
+        }
 
-  <!-- ============================================================
-       配置区：只需改这里
-       - TARGET_URL    ：要跳转到的 GitHub 链接（固定写死）
-       - REDIRECT_DELAY：倒计时秒数，到时自动跳转
-       - SITE_NAME     ：落地页标题
-       - SITE_SUB      ：副标题说明
-       ============================================================ -->
-  <script>
-    var TARGET_URL     = "https://github.com/你的用户名/你的仓库"; // ← 改成你的 GitHub 仓库/下载地址
-    var REDIRECT_DELAY = 3;                                        // ← 自动跳转倒计时（秒）
-    var SITE_NAME      = "PlayNest";
-    var SITE_SUB       = "即将跳转到 GitHub 下载页面";
-  </script>
+        body {
+            font-family: 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-  <!-- meta refresh 由下方 JS 根据 TARGET_URL 动态写入，保证单一来源、不会和上面写错 -->
-  <meta id="meta-refresh" http-equiv="refresh" content="0">
+        .nav-bar {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 16px 32px;
+            border-radius: var(--radius);
+            margin-bottom: var(--gap);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 18px rgba(79,70,229,.25);
+        }
 
-  <title>正在跳转到 GitHub…</title>
+        .nav-title { font-size: 1.5rem; font-weight: 700; }
+        .nav-version { font-size: 0.875rem; opacity: 0.92; }
 
-  <style>
-    :root{
-      --indigo:#4f46e5;   /* 站点主色 靛蓝 */
-      --teal:#14b8a6;     /* 站点辅色 青绿 */
-      --sky:#0ea5e9;
-      --ink:#1f2937;
-      --muted:#6b7280;
-    }
-    *{box-sizing:border-box;margin:0;padding:0;}
-    html,body{height:100%;}
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
-      background:linear-gradient(135deg,#eef2ff 0%,#ecfeff 100%);
-      color:var(--ink);
-      display:flex;align-items:center;justify-content:center;
-      min-height:100vh;padding:24px;
-    }
-    .card{
-      width:100%;max-width:420px;
-      background:#fff;border-radius:20px;
-      box-shadow:0 20px 50px rgba(79,70,229,.15);
-      padding:40px 32px;text-align:center;
-      border-top:6px solid transparent;
-      border-image:linear-gradient(90deg,var(--indigo),var(--teal)) 1;
-    }
-    .logo{
-      width:64px;height:64px;margin:0 auto 18px;
-      border-radius:18px;
-      background:linear-gradient(135deg,var(--indigo),var(--teal));
-      display:flex;align-items:center;justify-content:center;
-      box-shadow:0 8px 20px rgba(20,184,166,.35);
-    }
-    .logo svg{width:34px;height:34px;fill:#fff;}
-    h1{font-size:20px;font-weight:800;margin-bottom:6px;}
-    .sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
-    .count{
-      font-size:48px;font-weight:800;line-height:1;
-      background:linear-gradient(135deg,var(--indigo),var(--sky));
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-      margin-bottom:6px;
-    }
-    .count-tip{font-size:13px;color:var(--muted);margin-bottom:26px;}
-    .btn{
-      display:inline-flex;align-items:center;gap:8px;
-      text-decoration:none;font-weight:700;font-size:15px;color:#fff;
-      background:linear-gradient(135deg,var(--indigo),var(--teal));
-      padding:13px 26px;border-radius:12px;
-      box-shadow:0 8px 20px rgba(79,70,229,.3);
-      transition:transform .15s,filter .15s;
-    }
-    .btn:hover{transform:translateY(-2px);filter:brightness(1.05);}
-    .btn svg{width:18px;height:18px;fill:#fff;}
-    .foot{margin-top:22px;font-size:12px;color:#9ca3af;}
-    .foot a{color:var(--indigo);text-decoration:none;}
-    /* 无 JS 兜底 */
-    .noscript-note{margin-top:18px;font-size:13px;color:var(--muted);}
-  </style>
+        .hero-section {
+            display: grid;
+            grid-template-columns: minmax(300px, 1fr) minmax(350px, 40%);
+            gap: var(--gap);
+            align-items: center;
+            margin-bottom: var(--gap);
+        }
+
+        .screenshot-container {
+            position: relative;
+            padding-bottom: 60%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            background: var(--secondary);
+        }
+
+        .screenshot {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .description {
+            background: var(--secondary);
+            padding: clamp(16px, 3vw, 24px);
+            border-radius: var(--radius);
+            min-width: 300px;
+        }
+
+        .description h1 {
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            margin-bottom: 1em;
+            color: var(--primary);
+        }
+
+        .description p {
+            font-size: clamp(14px, 1.6vw, 16px);
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        /* ===== 夸克下载按钮：主行动点 ===== */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 13px 42px;
+            border: none;
+            border-radius: 24px;
+            margin-top: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(79,70,229,.3);
+            transition: transform .15s, filter .15s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.05); }
+        .btn-primary i { font-size: 1.1em; }
+
+        /* 提取码小提示（可选，没有就删掉这段） */
+        .code-hint {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+        .code-hint b { color: var(--accent); letter-spacing: 2px; }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: var(--gap) 0;
+        }
+
+        .category-item {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f7ff 100%);
+            border: 1px solid rgba(79,70,229,0.15);
+            padding: 18px 20px;
+            border-radius: var(--radius);
+            display: flex;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .category-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(79,70,229,0.12);
+            border-color: rgba(79,70,229,0.3);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: var(--gap) 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 24px;
+            background: linear-gradient(145deg, #f8f8f8 0%, #f0fdfa 100%);
+            border-radius: var(--radius);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-icon {
+            font-size: 1.4em;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: rotate(10deg) scale(1.1);
+            filter: drop-shadow(0 2px 4px rgba(79,70,229,0.3));
+            color: var(--accent);
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin: 32px 0 20px;
+            padding-left: 3px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .faq-section { background: #f5f5f5; padding: 32px; border-radius: var(--radius); }
+        .faq-item { margin-bottom: 20px; padding: 16px; background: white; border-radius: calc(var(--radius) - 2px); }
+        .faq-item h3 { color: var(--primary); margin-bottom: 6px; }
+
+        footer {
+            background: var(--secondary);
+            padding: 24px 20px;
+            margin-top: var(--gap);
+            text-align: center;
+            border-radius: var(--radius);
+        }
+        footer .quark-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+        footer .quark-links a {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; text-decoration: none; font-weight: 700;
+            padding: 10px 22px; border-radius: 20px; font-size: 14px;
+            box-shadow: 0 4px 12px rgba(79,70,229,.25);
+        }
+        footer .quark-links a:hover { filter: brightness(1.05); }
+        footer small { color: var(--muted); }
+
+        @media (max-width: 1024px) {
+            .hero-section { grid-template-columns: 1fr; }
+            .category-grid { grid-template-columns: repeat(3, 1fr); }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+            .screenshot-container { order: -1; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --gap: 16px; }
+            .category-grid { grid-template-columns: repeat(2, 1fr); }
+            .feature-grid { grid-template-columns: 1fr; }
+            .nav-bar { padding: 12px 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .category-grid { grid-template-columns: 1fr; }
+            .screenshot-container { padding-bottom: 70%; }
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo" aria-hidden="true">
-      <!-- GitHub 图标 -->
-      <svg viewBox="0 0 16 16" aria-hidden="true">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-      </svg>
-    </div>
-    <h1 id="title">正在跳转到 GitHub…</h1>
-    <p class="sub" id="sub">即将跳转到 GitHub 下载页面</p>
+    <!-- ===== 顶部导航：改成你的名称 / 版本 ===== -->
+    <nav class="nav-bar">
+        <div class="nav-title">游戏/软件名称</div>
+        <div class="nav-version">v1.0.0</div>
+    </nav>
 
-    <div class="count" id="count">3</div>
-    <div class="count-tip">秒后自动跳转</div>
+    <!-- ===== 主视觉：截图 + 简介 + 夸克下载按钮 ===== -->
+    <section class="hero-section">
+        <div class="screenshot-container">
+            <!-- 把你的截图放到同目录，改成实际文件名 -->
+            <img src="screenshot.jpg" class="screenshot" alt="游戏/软件界面演示">
+        </div>
+        <div class="description">
+            <h1>一句话亮点标题</h1>
+            <p>这里写一段简介：资源内容、版本说明、为什么值得下载等。例如：完整版含全部 DLC、已整合运行库、解压即玩，通过夸克网盘高速下载。</p>
 
-    <a class="btn" id="goBtn" href="#">
-      <svg viewBox="0 0 16 16" aria-hidden="true">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-      </svg>
-      立即前往 GitHub ↗
-    </a>
+            <!-- ★ 主要夸克下载链接：把 href 换成你的 pan.quark.cn 分享地址 ★ -->
+            <a class="btn-primary" href="https://pan.quark.cn/s/你的夸克分享链接" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-cloud-download-alt"></i> 夸克网盘立即下载
+            </a>
 
-    <p class="foot">若未自动跳转，请点击上方按钮。<br>本页由 <span id="sitename">PlayNest</span> 提供中转。</p>
-    <noscript>
-      <p class="noscript-note">你的浏览器禁用了 JavaScript，请<a href="#" id="nsLink">点击这里手动前往 GitHub</a>。</p>
-    </noscript>
-  </div>
+            <!-- 提取码（可选）：没有就删掉这一行 -->
+            <div class="code-hint">提取码：<b>ABCD</b></div>
+        </div>
+    </section>
 
-  <script>
-    (function () {
-      // 单一数据源：用 TARGET_URL 动态写 meta refresh，避免和上面写错两处
-      var meta = document.getElementById('meta-refresh');
-      if (meta) meta.content = REDIRECT_DELAY + ";url=" + TARGET_URL;
+    <!-- ===== 版本 / 亮点特性 ===== -->
+    <h2 class="section-title">版本特性</h2>
+    <section class="feature-grid">
+        <div class="feature-item"><i class="feature-icon fas fa-bolt"></i><span>高速夸克直链下载</span></div>
+        <div class="feature-item"><i class="feature-icon fas fa-layer-group"></i><span>整合全部 DLC / 资源</span></div>
+        <div class="feature-item"><i class="feature-icon fas fa-shield-alt"></i><span>已校验 · 安全无毒</span></div>
+    </section>
 
-      document.getElementById('title').textContent = "正在跳转到 GitHub…";
-      document.getElementById('sub').textContent   = SITE_SUB || "即将跳转到 GitHub 下载页面";
-      document.getElementById('sitename').textContent = SITE_NAME || "PlayNest";
+    <!-- ===== 核心内容网格（按需改文案） ===== -->
+    <h2 class="section-title">核心内容</h2>
+    <section class="category-grid">
+        <div class="category-item"><span>主程序</span><span>1 个</span></div>
+        <div class="category-item"><span>补丁 / MOD</span><span>若干</span></div>
+        <div class="category-item"><span>汉化包</span><span>完整</span></div>
+        <div class="category-item"><span>运行库</span><span>内置</span></div>
+        <div class="category-item"><span>攻略</span><span>附赠</span></div>
+        <div class="category-item"><span>原声音乐</span><span>可选</span></div>
+        <div class="category-item"><span>修改器</span><span>可选</span></div>
+        <div class="category-item"><span>更新日志</span><span>见合集</span></div>
+    </section>
 
-      var btn  = document.getElementById('goBtn');
-      var ns   = document.getElementById('nsLink');
-      btn.href = TARGET_URL;
-      if (ns) ns.href = TARGET_URL;
+    <!-- ===== 技术亮点 ===== -->
+    <h2 class="section-title">下载说明</h2>
+    <section class="feature-grid">
+        <div class="feature-item"><i class="feature-icon fas fa-download"></i><span>夸克网盘不限速下载</span></div>
+        <div class="feature-item"><i class="feature-icon fas fa-folder-open"></i><span>解压即玩 / 一键安装</span></div>
+        <div class="feature-item"><i class="feature-icon fas fa-sync-alt"></i><span>长期维护更新</span></div>
+        <div class="feature-item"><i class="feature-icon fas fa-key"></i><span>提取码见上方按钮</span></div>
+        <div class="feature-item"><i class="feature-icon fas fa-comments"></i><span>问题评论区留言</span></div>
+        <div class="feature-item"><i class="feature-icon fas fa-heart"></i><span>收藏本站不迷路</span></div>
+    </section>
 
-      var remain = REDIRECT_DELAY;
-      var el = document.getElementById('count');
-      el.textContent = remain;
+    <!-- ===== 常见问题 ===== -->
+    <h2 class="section-title">常见问题</h2>
+    <section class="faq-section">
+        <div class="faq-item">
+            <h3>需要会员才能下载吗？</h3>
+            <p>夸克网盘普通用户即可下载，登录后保存到自己网盘再下载更稳定。</p>
+        </div>
+        <div class="faq-item">
+            <h3>链接失效怎么办？</h3>
+            <p>资源会定期补链，若提示失效请在评论区反馈，我们会尽快更新。</p>
+        </div>
+        <div class="faq-item">
+            <h3>解压密码是多少？</h3>
+            <p>如无特殊说明则无密码；若有，密码会标注在下载页或压缩包注释中。</p>
+        </div>
+    </section>
 
-      var timer = setInterval(function () {
-        remain -= 1;
-        if (remain <= 0) {
-          clearInterval(timer);
-          window.location.replace(TARGET_URL);
-          return;
-        }
-        el.textContent = remain;
-      }, 1000);
-    })();
-  </script>
+    <!-- ===== 底部：夸克网盘合集链接 ===== -->
+    <footer>
+        <div class="quark-links">
+            <!-- ★ 底部夸克合集：换成你的 pan.quark.cn 合集地址 ★ -->
+            <a href="https://pan.quark.cn/s/你的夸克合集链接1" target="_blank" rel="noopener noreferrer">软件合集</a>
+            <a href="https://pan.quark.cn/s/你的夸克合集链接2" target="_blank" rel="noopener noreferrer">游戏合集</a>
+        </div>
+        <small>本站资源均来自网络收集，仅供学习交流使用，请在 24 小时内删除。</small>
+    </footer>
 </body>
 </html>
